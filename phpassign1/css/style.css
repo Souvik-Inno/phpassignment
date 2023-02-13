@@ -1,0 +1,57 @@
+/* css root variables */
+:root {
+  --fs-base: 18px;
+  --fs-14: 0.875rem;
+  --fs-20: 1.25rem;
+  --fs-64: 4.25rem;
+}
+
+/* base declaration */
+*,
+html,
+body {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+html,
+body {
+  font-weight: 300;
+  font-size: var(--fs-base);
+  overflow-x: hidden;
+}
+
+/* Global classes */
+.container {
+  max-width: 1148px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+.container-extend {
+  margin: 0 -15px;
+}
+.flex-wrapper{
+  display: flex;
+}
+.flex-just-mid{
+  display: flex;
+  justify-content: center;
+}
+.flex-col{
+  display: flex;
+  flex-direction: column;
+}
+
+/* table css */
+table{
+  width: 50%;
+  border-collapse: collapse;
+}
+table td th{
+  border: 1px solid black;
+  padding: 8px;
+}
+th{
+  text-align: left;
+}
