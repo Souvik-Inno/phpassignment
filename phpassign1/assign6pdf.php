@@ -1,0 +1,34 @@
+<?php
+  if (isset($_POST['btnDownload'])) {
+    require("classFormData.php");
+    require('fpdf/fpdf.php');
+    $formData = new FormData();
+    session_start();
+    $formData = $_SESSION['formData'];
+    $pdf = new FPDF();
+    $pdf->AddPage();
+    $pdf->SetFont('Arial', 'B', 16);
+    $pdf->Cell(0, 10, 'Form Details', 1, 1, 'C');
+    $pdf->Cell(90, 10, 'First Name: ', 1, 0);
+    $pdf->Cell(100, 10, $formData->inputFirstName, 1, 1);
+    $pdf->Cell(90, 10, 'Last Name: ', 1, 0);
+    $pdf->Cell(100, 10, $formData->inputLastName, 1, 1);
+    $pdf->Cell(90, 10, 'First Name: ', 1, 0);
+    $pdf->Cell(100, 10, $formData->inputFirstName, 1, 1);
+    $pdf->Cell(90, 50, 'Profile Pic: ', 1, 0);
+    $pdf->Image($formData->destination,120,50, 70, 50);
+    $pdf->Ln(50);
+    
+    foreach($formData->lines as $line){
+      list($subject, $mark) = explode("|", $line);
+      $pdf->Cell(90, 10, $subject, 1, 0);
+      $pdf->Cell(100, 10, $mark, 1, 1);
+    }
+    $pdf->Cell(90, 10, 'Phone Number: ', 1, 0);
+    $pdf->Cell(100, 10, $formData->phoneNumber, 1, 1);
+    $pdf->Cell(90, 10, 'Email Id: ', 1, 0);
+    $pdf->Cell(100, 10, $formData->emailId, 1, 1);
+    $pdf->Output();
+    ob_end_flush();
+  }
+?>
