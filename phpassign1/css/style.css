@@ -20,6 +20,7 @@ body {
   font-weight: 300;
   font-size: var(--fs-base);
   overflow-x: hidden;
+  height: 100%;
 }
 
 /* Global classes */
@@ -28,6 +29,42 @@ body {
   width: 100%;
   margin: 0 auto;
   padding: 0 15px;
+}
+
+.container-form {
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+.container-shrimp {
+  max-width: 550px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 40px;
+  border: solid 1px black;
+  border-radius: 25px;
+}
+
+.bg-image {
+  /* background: url('https://wallpaperaccess.com/full/1900912.jpg'); */
+  background: url('https://miro.medium.com/max/1024/1*9WeJrBj6pp-qnGjRGg2NUw.png');
+  /* background: url('https://e0.pxfuel.com/wallpapers/441/665/desktop-wallpaper-abstract-dark-lines-form-shadow-oblique-slanting.jpg'); */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: white;
+  height: 100%;
+}
+
+.blur-container {
+  color: white;
+  backdrop-filter: blur(8px);
+  padding: 25px;
+  background-color: rgba(0, 0, 0, 0.3);
+  border: none;
+  border-radius: 25px;
 }
 
 .container-extend {
@@ -47,6 +84,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 20px;
 }
 
@@ -54,11 +92,12 @@ body {
 table {
   width: 50%;
   border-collapse: collapse;
-  border: 1px solid black;
+  border: 1px solid white;
 }
 
-table td, th{
-  border: 1px solid black;
+table td,
+th {
+  border: 1px solid white;
   padding: 8px;
   text-align: center;
 }
@@ -69,6 +108,15 @@ table td, th{
   border-radius: 100%;
 }
 
-.bg-danger{
+.bg-danger {
   background-color: red;
+}
+
+/* loginpage */
+.login-main {
+  height: 600px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
 }
