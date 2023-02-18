@@ -1,9 +1,9 @@
 <?php
-// If not logged in go to home page. 
-session_start();
-if (!isset($_SESSION['logged'])) {
-  header('location: loginPage.php');
-}
+  // If not logged in go to home page. 
+  session_start();
+  if (!isset($_SESSION['logged'])) {
+    header('location: loginPage.php');
+  }
 ?>
 <!doctype html>
 <html lang="en">

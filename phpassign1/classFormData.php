@@ -6,8 +6,9 @@
   *  work with them to give desired outputs.
   */
   class FormData {
+
     /** 
-     *  Declaring variables 
+     *  Declaring variables.
      *  @var string $inputFirstName For storing first name from form.
      *  @var string $inputLastName For storing last name from form.
      *  @var array $image For storing image array containing name, tmp_name etc.
@@ -28,27 +29,60 @@
     public $emailId;
     public $errors = array();
     
-    function setFirstName($firstName) {
+    /**
+     *  Function to set first name.
+     *  @param string $firstName Stores first name.
+     */
+    public function setFirstName($firstName) {
       $this->inputFirstName = $firstName;
     }
-    function setLastName($lastName) {
+
+    /**
+     *  Function to set Last name.
+     *  @param string $lastName Stores last name.
+     */
+    public function setLastName($lastName) {
       $this->inputLastName = $lastName;
     }
-    function setImage($img) {
+
+    /**
+     *  Function to set image.
+     *  @param string $img Stores image.
+     */
+    public function setImage($img) {
       $this->image = $img;
     }
-    function setPhone($number) {
+
+    /**
+     *  Function to set number.
+     *  @param int $number Stores phone number.
+     */
+    public function setPhone($number) {
       $this->phoneNumber = $number;
     }
-    function setEmailId($email) {
+
+    /**
+     *  Function to set email id.
+     *  @param string $email Stores email id.
+     */
+    public function setEmailId($email) {
       $this->emailId = $email;
     }
-    function uploadImage() {
+
+    /**
+     *  Function to upload image.
+     *  Moves the uploaded image to destination in server.
+     */
+    public function uploadImage() {
       $filename = $this->image['name'];
       $this->destination = 'images/' . $filename;
       move_uploaded_file($this->image['tmp_name'], $this->destination);
     }
-    function errorCheck() {
+
+    /**
+     * Checks error in first and last name.
+     */
+    public function errorCheck() {
       if (empty($this->inputFirstName)) {
         $this->errors['inputFirstName'] = "First Name is required";
       }
@@ -56,11 +90,15 @@
         $this->errors['inputLastName'] = "Last Name is required";
       }
       if (count($this->errors) == 0) {
-        return true;
+        return TRUE;
       }
-      return false;
+      return FALSE;
     }
-    function errorCheck2() {
+
+    /**
+     * Checks error in firstname, lastname and image.
+     */
+    public function errorCheck2() {
       if (empty($this->inputFirstName)) {
         $this->errors['inputFirstName'] = "First Name is required";
       }
@@ -71,11 +109,15 @@
         $this->errors['image'] = "Image is required";
       }
       if (count($this->errors) == 0) {
-        return true;
+        return TRUE;
       }
-      return false;
+      return FALSE;
     }
-    function errorCheck4() {
+
+    /**
+     * Checks errors in firstname, lastname, image and phonenumber.
+     */
+    public function errorCheck4() {
       if (empty($this->inputFirstName)) {
         $this->errors['inputFirstName'] = "First Name is required";
       }
@@ -89,11 +131,15 @@
         $this->errors['phoneNumber'] = "phoneNumber is required";
       }
       if (count($this->errors) == 0) {
-        return true;
+        return TRUE;
       }
-      return false;
+      return FALSE;
     }
-    function fullErrorCheck() {
+
+    /**
+     * Checks errors in firstname, lastname, image, phonenumber and email.
+     */
+    public function fullErrorCheck() {
       if (empty($this->inputFirstName)) {
         $this->errors['inputFirstName'] = "First Name is required";
       }
@@ -110,11 +156,17 @@
         $this->errors['emailId'] = "Email Id is required";
       }
       if (count($this->errors) == 0) {
-        return true;
+        return TRUE;
       }
-      return false;
+      return FALSE;
     }
-    function tableData($array) {
+
+    /**
+     * Function to print subject and marks.
+     * @param string $array string containing all the subject and marks.
+     * Prints the subject and marks in a table row.
+     */
+    public function tableData($array) {
       if(empty($array)){
         return;
       }
@@ -127,14 +179,19 @@
             <?php echo $subject; ?>
           </td>
           <td>
-            <?php
-            echo $mark; ?>
+            <?php echo $mark; ?>
           </td>
         </tr>
       <?php
       }
     }
-    function checkEmail() {
+
+    /**
+     * Function to check if provided email is correct.
+     * Uses mailboxlayer api to verify the mail.
+     * @var string $apiKey is required to connect to the api.
+     */
+    public function checkEmail() {
       $curl = curl_init();
       curl_setopt_array(
         $curl,
@@ -144,11 +201,11 @@
             "Content-Type: text/plain",
             "apikey: {$this->apiKey}"
           ),
-          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_RETURNTRANSFER => TRUE,
           CURLOPT_ENCODING => "",
           CURLOPT_MAXREDIRS => 10,
           CURLOPT_TIMEOUT => 0,
-          CURLOPT_FOLLOWLOCATION => true,
+          CURLOPT_FOLLOWLOCATION => TRUE,
           CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
           CURLOPT_CUSTOMREQUEST => "GET"
         )
@@ -163,5 +220,6 @@
         exit();
       }
     }
+
   }
 ?>

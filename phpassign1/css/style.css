@@ -14,7 +14,6 @@ body {
   margin: 0;
   box-sizing: border-box;
 }
-
 html,
 body {
   font-weight: 300;
@@ -30,14 +29,12 @@ body {
   margin: 0 auto;
   padding: 0 15px;
 }
-
 .container-form {
   max-width: 800px;
   width: 100%;
   margin: 0 auto;
   padding: 0 15px;
 }
-
 .container-shrimp {
   max-width: 550px;
   width: 100%;
@@ -46,18 +43,14 @@ body {
   border: solid 1px black;
   border-radius: 25px;
 }
-
 .bg-image {
-  /* background: url('https://wallpaperaccess.com/full/1900912.jpg'); */
-  background: url('https://miro.medium.com/max/1024/1*9WeJrBj6pp-qnGjRGg2NUw.png');
-  /* background: url('https://e0.pxfuel.com/wallpapers/441/665/desktop-wallpaper-abstract-dark-lines-form-shadow-oblique-slanting.jpg'); */
+  background: url('../images/formbgimage.png');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   color: white;
   height: 100%;
 }
-
 .blur-container {
   color: white;
   backdrop-filter: blur(8px);
@@ -66,20 +59,16 @@ body {
   border: none;
   border-radius: 25px;
 }
-
 .container-extend {
   margin: 0 -15px;
 }
-
 .flex-wrapper {
   display: flex;
 }
-
 .flex-just-mid {
   display: flex;
   justify-content: center;
 }
-
 .flex-col {
   display: flex;
   flex-direction: column;
@@ -94,7 +83,6 @@ table {
   border-collapse: collapse;
   border: 1px solid white;
 }
-
 table td,
 th {
   border: 1px solid white;
@@ -107,16 +95,14 @@ th {
   width: 400px;
   border-radius: 100%;
 }
-
 .bg-danger {
   background-color: red;
 }
 
 /* loginpage */
 .login-main {
-  height: 600px;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-
 }
