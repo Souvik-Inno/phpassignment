@@ -18,7 +18,8 @@
     $pdf->Cell(90, 50, 'Profile Pic: ', 1, 0);
     $pdf->Image($formData->destination, 120, 50, 70, 50);
     $pdf->Ln(50);
-    foreach ($formData->lines as $line) {
+    $lines = explode("\n", $formData->tableDataArray);
+    foreach ($lines as $line) {
       list($subject, $mark) = explode("|", $line);
       $pdf->Cell(90, 10, $subject, 1, 0);
       $pdf->Cell(100, 10, $mark, 1, 1);

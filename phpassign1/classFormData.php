@@ -1,10 +1,10 @@
 <?php
 
   /** 
-  *  Class containing all the data entered through the forms.
-  *  Contains Methods to set the class variables and
-  *  work with them to give desired outputs.
-  */
+   *  Class containing all the data entered through the forms.
+   *  Contains Methods to set the class variables and
+   *  work with them to give desired outputs.
+   */
   class FormData {
 
     /** 
@@ -13,7 +13,7 @@
      *  @var string $inputLastName For storing last name from form.
      *  @var array $image For storing image array containing name, tmp_name etc.
      *  @var string $destiation For storing destination of image.
-     *  @var string[] $lines For storing string array of subject and marks.
+     *  @var string[] $tableDataArray For storing string array of subject and marks.
      *  @var int $phoneNumber For storing phone Number from form.
      *  @var string $apiKey For storing apiKey for mail verification.
      *  @var string $emailId For storing email id from form.
@@ -23,12 +23,19 @@
     public $inputLastName;
     public $image;
     public $destination;
-    public $lines;
+    public $tableDataArray;
     public $phoneNumber;
     public $apiKey = "wPIk6UQ8PzRDPadxH7xfWqwEes9ZHLRm";
     public $emailId;
-    public $errors = array();
-    
+    public $errors = array(
+      'inputFirstName' => '',
+      'inputLastName' => '',
+      'image' => '',
+      'tableDataArray' => '',
+      'phoneNumber' => '',
+      'emailId' => ''
+    );
+
     /**
      *  Function to set first name.
      *  @param string $firstName Stores first name.
@@ -70,6 +77,14 @@
     }
 
     /**
+     *  Function to set Subject and Marks for table.
+     *  @param string $tableDataArray Stores table data as string.
+     */
+    public function setTableDataArray($tableDataArray){
+      $this->tableDataArray = $tableDataArray;
+    }
+
+    /**
      *  Function to upload image.
      *  Moves the uploaded image to destination in server.
      */
@@ -83,13 +98,16 @@
      * Checks error in first and last name.
      */
     public function errorCheck() {
+      $errorCount = 0;
       if (empty($this->inputFirstName)) {
-        $this->errors['inputFirstName'] = "First Name is required";
+        $this->errors['inputFirstName'] = "*First Name is required.";
+        $errorCount++;
       }
       if (empty($this->inputLastName)) {
-        $this->errors['inputLastName'] = "Last Name is required";
+        $this->errors['inputLastName'] = "*Last Name is required.";
+        $errorCount++;
       }
-      if (count($this->errors) == 0) {
+      if ($errorCount == 0) {
         return TRUE;
       }
       return FALSE;
@@ -99,38 +117,78 @@
      * Checks error in firstname, lastname and image.
      */
     public function errorCheck2() {
+      $errorCount = 0;
       if (empty($this->inputFirstName)) {
-        $this->errors['inputFirstName'] = "First Name is required";
+        $this->errors['inputFirstName'] = "*First Name is required.";
+        $errorCount++;
       }
       if (empty($this->inputLastName)) {
-        $this->errors['inputLastName'] = "Last Name is required";
+        $this->errors['inputLastName'] = "*Last Name is required.";
+        $errorCount++;
       }
-      if(empty($this->image)){
-        $this->errors['image'] = "Image is required";
+      if (empty($this->image) || !@exif_imagetype($this->destination)) {
+        $this->errors['image'] = "*Image is required.";
+        $errorCount++;
       }
-      if (count($this->errors) == 0) {
+      if ($errorCount == 0) {
         return TRUE;
       }
       return FALSE;
     }
 
     /**
-     * Checks errors in firstname, lastname, image and phonenumber.
+     * Checks error in firstname, lastname, image and marks.
      */
-    public function errorCheck4() {
+    public function errorCheck3() {
+      $errorCount = 0;
       if (empty($this->inputFirstName)) {
-        $this->errors['inputFirstName'] = "First Name is required";
+        $this->errors['inputFirstName'] = "*First Name is required.";
+        $errorCount++;
       }
       if (empty($this->inputLastName)) {
-        $this->errors['inputLastName'] = "Last Name is required";
+        $this->errors['inputLastName'] = "*Last Name is required.";
+        $errorCount++;
       }
-      if(empty($this->image)){
-        $this->errors['image'] = "Image is required";
+      if (empty($this->image) || !@exif_imagetype($this->destination)) {
+        $this->errors['image'] = "*Image is required.";
+        $errorCount++;
       }
-      if(empty($this->phoneNumber)){
-        $this->errors['phoneNumber'] = "phoneNumber is required";
+      if(empty($this->tableDataArray)){
+        $this->errors['tableDataArray'] = "*Subject and Marks are required.";
+        $errorCount++;
       }
-      if (count($this->errors) == 0) {
+      if ($errorCount == 0) {
+        return TRUE;
+      }
+      return FALSE;
+    }
+
+    /**
+     * Checks errors in firstname, lastname,
+     * Image, marks and phonenumber.
+     */
+    public function errorCheck4() {
+      $errorCount = 0;
+      if (empty($this->inputFirstName)) {
+        $this->errors['inputFirstName'] = "*First Name is required.";
+        $errorCount++;
+      }
+      if (empty($this->inputLastName)) {
+        $this->errors['inputLastName'] = "*Last Name is required.";
+        $errorCount++;
+      }
+      if (empty($this->image) || !@exif_imagetype($this->destination)) {
+        $this->errors['image'] = "*Image is required.";
+        $errorCount++;
+      }
+      if (empty($this->tableDataArray)) {
+        $this->errors['tableDataArray'] = "*Subject and Marks are Required.";
+      }
+      if (empty($this->phoneNumber) || strlen($this->phoneNumber) < 13) {
+        $this->errors['phoneNumber'] = "*PhoneNumber is required.";
+        $errorCount++;
+      }
+      if ($errorCount == 0) {
         return TRUE;
       }
       return FALSE;
@@ -140,38 +198,46 @@
      * Checks errors in firstname, lastname, image, phonenumber and email.
      */
     public function fullErrorCheck() {
+      $errorCount = 0;
       if (empty($this->inputFirstName)) {
-        $this->errors['inputFirstName'] = "First Name is required";
+        $this->errors['inputFirstName'] = "*First Name is required.";
+        $errorCount++;
       }
       if (empty($this->inputLastName)) {
-        $this->errors['inputLastName'] = "Last Name is required";
+        $this->errors['inputLastName'] = "*Last Name is required.";
+        $errorCount++;
       }
-      if(empty($this->image)){
-        $this->errors['image'] = "Image is required";
+      if (empty($this->image) || !@exif_imagetype($this->destination)) {
+        $this->errors['image'] = "*Image is required.";
+        $errorCount++;
       }
-      if(empty($this->phoneNumber)){
-        $this->errors['phoneNumber'] = "phoneNumber is required";
+      if (empty($this->tableDataArray)) {
+        $this->errors['tableDataArray'] = "*Subject and Marks are Required.";
       }
-      if(empty($this->emailId)){
-        $this->errors['emailId'] = "Email Id is required";
+      if (empty($this->phoneNumber) || strlen($this->phoneNumber) < 13) {
+        $this->errors['phoneNumber'] = "*PhoneNumber is required.";
+        $errorCount++;
       }
-      if (count($this->errors) == 0) {
+      if (empty($this->emailId)) {
+        $this->errors['emailId'] = "*Email Id is required.";
+        $errorCount++;
+      }
+      else if (!$this->checkEmail()) {
+        $this->errors['emailId'] = "*Invalid Email is entered.";
+        $errorCount++;
+      }
+      if ($errorCount == 0) {
         return TRUE;
       }
       return FALSE;
     }
 
     /**
-     * Function to print subject and marks.
-     * @param string $array string containing all the subject and marks.
-     * Prints the subject and marks in a table row.
+     * Function to print subject and marks in a table row.
      */
-    public function tableData($array) {
-      if(empty($array)){
-        return;
-      }
-      $this->lines = explode("\n", $array);
-      foreach ($this->lines as $line) {
+    public function tableData() {
+      $lines = explode("\n", $this->tableDataArray);
+      foreach ($lines as $line) {
         list($subject, $mark) = explode("|", $line);
         ?>
         <tr>
@@ -182,7 +248,7 @@
             <?php echo $mark; ?>
           </td>
         </tr>
-      <?php
+        <?php
       }
     }
 
@@ -213,11 +279,14 @@
       $response = curl_exec($curl);
       $validator = json_decode($response);
       curl_close($curl);
+      if($validator == NULL) {
+        return FALSE;
+      }
       if ($validator->format_valid && $validator->smtp_check) {
-        echo "<h3>correct email provided</h3>";
+        return TRUE;
       } else {
-        echo "<h3 class='bg-danger'>incorrect email provided</h3>";
-        exit();
+        print_r($validator);
+        return FALSE;
       }
     }
 

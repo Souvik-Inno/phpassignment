@@ -59,6 +59,9 @@ body {
   border: none;
   border-radius: 25px;
 }
+.red{
+  color: red;
+}
 .container-extend {
   margin: 0 -15px;
 }

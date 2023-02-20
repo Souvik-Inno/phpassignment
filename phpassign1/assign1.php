@@ -4,6 +4,22 @@
   if (!isset($_SESSION['logged'])) {
     header('location: loginPage.php');
   }
+
+  /**
+   * Creating class object and passing value to it for validation.
+   * If validation successful then go to result page.
+   */
+  require 'classFormData.php';
+  $formData = new FormData();
+  if (isset($_POST['form1Submit'])) {
+    $formData->setFirstName($_POST['inputFirstName']);
+    $formData->setLastName($_POST['inputLastName']);
+    $formData->errorCheck();
+    if ($formData->errorCheck()) {
+      $_SESSION['formData'] = $formData;
+      header('location: assign1result.php');
+    }
+  }
 ?>
 <!doctype html>
 <html lang="en">
@@ -69,22 +85,24 @@
   <!-- Main Section with Form -->
   <div class="main m-5">
     <div class="main-container container-form blur-container">
-      <form class="assign1Form m-3" method="post" action="assign1result.php" enctype="multipart/form-data">
+      <form class="assign1Form m-3" method="post" action="assign1.php" enctype="multipart/form-data">
         <div class="form-group">
           <label for="inputFirstName">First Name</label>
           <input type="text" class="form-control" id="inputFirstName" name="inputFirstName" aria-describedby="emailHelp"
             placeholder="Enter First Name">
+          <span class="red"><?php echo "{$formData->errors['inputFirstName']}"; ?></span>
         </div>
         <div class="form-group">
           <label for="inputLastName">Last Name</label>
           <input type="text" class="form-control" id="inputLastName" name="inputLastName" placeholder="Last Name">
+          <span class="red"><?php echo "{$formData->errors['inputLastName']}"; ?></span>
         </div>
         <div class="form-group">
           <label for="inputFullName">Full Name</label>
           <input type="text" class="form-control" id="inputFullName" name="inputFullName" placeholder="Full Name"
             disabled>
         </div>
-        <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" name="form1Submit" class="btn btn-primary">Submit</button>
       </form>
     </div>
   </div>
@@ -115,11 +133,15 @@
     $(".assign1Form").submit(function (event) {
       var inputFirstName = $("input[name='inputFirstName']").val();
       var inputLastName = $("input[name='inputLastName']").val();
-      if (!inputFirstName || !inputLastName) {
-        alert("Both First Name and Last Name are required fields");
+      if (!inputFirstName) {
+        alert("First Name is Required!");
         event.preventDefault();
       }
-      if (!alphabetRegex.test(inputFirstName) || !alphabetRegex.test(inputLastName)) {
+      else if (!inputLastName) {
+        alert("last Name is Required!");
+        event.preventDefault();
+      }
+      else if (!alphabetRegex.test(inputFirstName) || !alphabetRegex.test(inputLastName)) {
         alert("Name should contain alphabets only");
         event.preventDefault();
       }

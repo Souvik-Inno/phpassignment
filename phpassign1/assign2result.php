@@ -1,5 +1,12 @@
 <?php
+  // Gets data from Form2 and stores in object.
+  require 'classFormData.php';
   session_start();
+  $formData = new FormData();
+  $formData = $_SESSION['formData'];
+
+  // Creates fullname from first and second name. 
+  $fullName = $formData->inputFirstName . ' ' . $formData->inputLastName;
 ?>
 <!doctype html>
 <html lang="en">
@@ -24,31 +31,6 @@
 <body class="bg-image">
   <div class="main m-5">
     <div class="main-container container-form flex-col blur-container">
-      <?php
-        // Creating class object and passing value to it.
-        require 'classFormData.php';
-        $formData = new FormData();
-        if (isset($_FILES['image']) && !isset($errors['fileType'])) {
-          $image = $_FILES['image'];
-          $formData->setImage($image);
-          $formData->setFirstName($_POST['inputFirstName']);
-          $formData->setLastName($_POST['inputLastName']);
-          $fullName = $formData->inputFirstName . ' ' . $formData->inputLastName;
-          $formData->uploadImage();
-          // Show all the errors.
-          if (!$formData->errorCheck2()) {
-            foreach ($formData->errors as $value) {
-              ?>
-              <h4>
-                <?php echo "$value"; ?>
-                <br>
-              </h4>
-              <?php
-            }
-            exit();
-          }
-        }
-      ?>
       <!-- Show the contents. -->
       <img src='<?php echo "$formData->destination" ?>' alt="profile pic" class="profile-pic">
       <h2>

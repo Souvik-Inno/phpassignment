@@ -4,6 +4,28 @@
   if(!isset($_SESSION['logged'])){
     header('location: loginPage.php');
   }
+
+  /**
+   * Creating class object and passing value to it for validation.
+   * If validation successful then go to result page.
+   */
+  require 'classFormData.php';
+  $formData = new FormData();
+  if (isset($_POST['form5Submit'])) {
+    $image = $_FILES['image'];
+    $formData->setImage($image);
+    $formData->setFirstName($_POST['inputFirstName']);
+    $formData->setLastName($_POST['inputLastName']);
+    $fullName = $formData->inputFirstName . ' ' . $formData->inputLastName;
+    $formData->uploadImage();
+    $formData->setTableDataArray($_POST['marks']);
+    $formData->setPhone($_POST['inputPhone']);
+    $formData->setEmailId($_POST['inputEmail']);
+    if ($formData->fullErrorCheck()) {
+      $_SESSION['formData'] = $formData;
+      header('location: assign5result.php');
+    }
+  }
 ?>
 <!doctype html>
 <html lang="en">
@@ -69,15 +91,17 @@
   <!-- Main Section with Form. -->
   <div class="main m-5">
     <div class="main-container container-form blur-container">
-      <form class="assign5Form m-3" method="post" action="assign5result.php" enctype="multipart/form-data">
+      <form class="assign5Form m-3" method="post" action="assign5.php" enctype="multipart/form-data">
         <div class="form-group">
           <label for="inputFirstName">First Name</label>
           <input type="text" class="form-control" id="inputFirstName" name="inputFirstName" aria-describedby="emailHelp"
             placeholder="Enter First Name">
+          <span class="red"><?php echo "{$formData->errors['inputFirstName']}"; ?></span>
         </div>
         <div class="form-group">
           <label for="inputLastName">Last Name</label>
           <input type="text" class="form-control" id="inputLastName" name="inputLastName" placeholder="Last Name">
+          <span class="red"><?php echo "{$formData->errors['inputLastName']}"; ?></span>
         </div>
         <div class="form-group">
           <label for="inputFullName">Full Name</label>
@@ -86,22 +110,26 @@
         </div>
         <div class="form-group">
           <label for="image">Upload Image:</label>
-          <input type="file" id="image" name="image" required>
+          <input type="file" id="image" name="image">
+          <span class="red"><?php echo "{$formData->errors['image']}"; ?></span>
         </div>
         <div class="form-group">
           <label for="marks">Enter Subject and Marks:</label>
           <br>
           <textarea rows="10" cols="30" name="marks" placeholder="Subject|Marks"></textarea>
+          <span class="red"><?php echo "{$formData->errors['tableDataArray']}"; ?></span>
         </div>
         <div class="form-group">
           <label for="inputPhone">Enter Phone Number:</label>
           <input type="text" class="form-control" id="inputPhone" name="inputPhone" placeholder="Enter Phone Number" value="+91">
+          <span class="red"><?php echo "{$formData->errors['phoneNumber']}"; ?></span>
         </div>
         <div class="form-group">
           <label for="inputPhone">Email id:</label>
           <input type="text" class="form-control" id="inputEmail" name="inputEmail" placeholder="Enter Email id" value="">
+          <span class="red"><?php echo "{$formData->errors['emailId']}"; ?></span>
         </div>
-        <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" name="form5Submit" class="btn btn-primary">Submit</button>
       </form>
     </div>
   </div>
@@ -139,27 +167,31 @@
 
     // Form validation with regex.
     var alphabetRegex = /^[a-zA-Z]+$/;
-    $(".assign5Form").submit(function (event) {
+    $(".assign4Form").submit(function (event) {
       var inputFirstName = $("input[name='inputFirstName']").val();
       var inputLastName = $("input[name='inputLastName']").val();
       var inputPhone = $("input[name='inputPhone']").val();
-      if (!inputFirstName || !inputLastName) {
-        alert("Both First Name and Last Name are required fields");
+      if (!inputFirstName) {
+        alert("First Name is Required!");
         event.preventDefault();
       }
-      if (!alphabetRegex.test(inputFirstName) || !alphabetRegex.test(inputLastName)) {
+      else if (!inputLastName) {
+        alert("last Name is Required!");
+        event.preventDefault();
+      }
+      else if (!alphabetRegex.test(inputFirstName) || !alphabetRegex.test(inputLastName)) {
         alert("Name should contain alphabets only");
         event.preventDefault();
       }
-      if(inputPhone.substring(0, 3) != "+91"){
+      else if (inputPhone.substring(0, 3) != "+91") {
         alert("Phone number should start with +91");
         event.preventDefault();
       }
-      else if(inputPhone.length != 13){
+      else if (inputPhone.length != 13) {
         alert("Phone number should have 10 digits only");
         event.preventDefault();
       }
-      else if(!$.isNumeric(inputPhone)){
+      else if (!$.isNumeric(inputPhone)) {
         alert("Phone number should be numbers only");
         event.preventDefault();
       }

@@ -1,5 +1,12 @@
 <?php
+  // Gets data from Form1 and stores in object.
+  require 'classFormData.php';
   session_start();
+  $formData = new FormData();
+  $formData = $_SESSION['formData'];
+
+  // Creates fullname from first and second name. 
+  $fullName = $formData->inputFirstName . ' ' . $formData->inputLastName;
 ?>
 <!doctype html>
 <html lang="en">
@@ -24,32 +31,9 @@
 <body class="bg-image">
   <div class="main m-5">
     <div class="main-container container-form flex-col blur-container">
-      <?php
-        // Creating class object and passing value to it.
-        require 'classFormData.php';
-        $formData = new FormData();
-        if (isset($_POST['submit'])) {
-          $formData->setFirstName($_POST['inputFirstName']);
-          $formData->setLastName($_POST['inputLastName']);
-          $fullName = $formData->inputFirstName . ' ' . $formData->inputLastName;
-          // Show all the errors.
-          if (!$formData->errorCheck()) {
-            foreach ($formData->errors as $value) {
-              ?>
-              <h4>
-                <?php echo "$value"; ?>
-                <br>
-              </h4>
-              <?php
-            }
-            exit();
-          }
-        }
-      ?>
       <!-- Show the results. -->
       <h2>
-        Hello
-        <?php echo "$fullName"; ?>
+        Hello <?php echo "$fullName"; ?>
       </h2>
       <a href="assign1.php">Go Back</a>
     </div>

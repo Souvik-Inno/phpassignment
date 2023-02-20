@@ -1,8 +1,28 @@
 <?php
   // If not logged in go to home page.
   session_start();
-  if(!isset($_SESSION['logged'])){
+  if (!isset($_SESSION['logged'])) {
     header('location: loginPage.php');
+  }
+
+  /**
+   * Creating class object and passing value to it for validation.
+   * If validation successful then go to result page.
+   */
+  require 'classFormData.php';
+  $formData = new FormData();
+  if (isset($_POST['form2Submit'])) {
+    $image = $_FILES['image'];
+    $formData->setImage($image);
+    $formData->setFirstName($_POST['inputFirstName']);
+    $formData->setLastName($_POST['inputLastName']);
+    $fullName = $formData->inputFirstName . ' ' . $formData->inputLastName;
+    $formData->uploadImage();
+    
+    if ($formData->errorCheck2()) {
+      $_SESSION['formData'] = $formData;
+      header('location: assign2result.php');
+    }
   }
 ?>
 <!doctype html>
@@ -69,15 +89,17 @@
   <!-- Main Section with Form. -->
   <div class="main m-5">
     <div class="main-container container-form blur-container">
-      <form class="assign2Form m-3" method="post" action="assign2result.php" enctype="multipart/form-data">
+      <form class="assign2Form m-3" method="post" action="assign2.php" enctype="multipart/form-data">
         <div class="form-group">
           <label for="inputFirstName">First Name</label>
           <input type="text" class="form-control" id="inputFirstName" name="inputFirstName" aria-describedby="emailHelp"
             placeholder="Enter First Name">
-        </div>
+            <span class="red"><?php echo "{$formData->errors['inputFirstName']}"; ?></span>
+          </div>
         <div class="form-group">
           <label for="inputLastName">Last Name</label>
           <input type="text" class="form-control" id="inputLastName" name="inputLastName" placeholder="Last Name">
+          <span class="red"><?php echo "{$formData->errors['inputLastName']}"; ?></span>
         </div>
         <div class="form-group">
           <label for="inputFullName">Full Name</label>
@@ -86,9 +108,10 @@
         </div>
         <div class="form-group">
           <label for="image">Upload Image:</label>
-          <input type="file" id="image" name="image" required>
+          <input type="file" id="image" name="image">
+          <span class="red"><?php echo "{$formData->errors['image']}"; ?></span>
         </div>
-        <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" name="form2Submit" class="btn btn-primary">Submit</button>
       </form>
     </div>
   </div>
@@ -125,18 +148,23 @@
 
     // Form validation with regex.
     var alphabetRegex = /^[a-zA-Z]+$/;
-    $(".assign2Form").submit(function (event) {
+    $(".assign1Form").submit(function (event) {
       var inputFirstName = $("input[name='inputFirstName']").val();
       var inputLastName = $("input[name='inputLastName']").val();
-      if (!inputFirstName || !inputLastName) {
-        alert("Both First Name and Last Name are required fields");
+      if (!inputFirstName) {
+        alert("First Name is Required!");
         event.preventDefault();
       }
-      if (!alphabetRegex.test(inputFirstName) || !alphabetRegex.test(inputLastName)) {
+      else if (!inputLastName) {
+        alert("last Name is Required!");
+        event.preventDefault();
+      }
+      else if (!alphabetRegex.test(inputFirstName) || !alphabetRegex.test(inputLastName)) {
         alert("Name should contain alphabets only");
         event.preventDefault();
       }
     });
   </script>
 </body>
+
 </html>
