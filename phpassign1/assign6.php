@@ -1,4 +1,5 @@
 <?php
+
   // If not logged in go to home page.
   session_start();
   if(!isset($_SESSION['logged'])){
@@ -158,6 +159,27 @@
       $("input[name='inputFullName']").val(field1 + ' ' + field2);
     });
 
+    // Form validation with regex.
+    var alphabetRegex = /^[a-zA-Z']+$/;
+    $("input[name='inputFirstName']").on("input", function(){
+      var field1 = $("input[name='inputFirstName']").val();
+      var field2 = $("input[name='inputLastName']").val();
+      if (!alphabetRegex.test(field1)) {
+        alert("Name should have alphabets only");
+        $("input[name='inputFirstName']").val(field1.slice(0, -1));
+        $("input[name='inputFullName']").val(field1.slice(0, -1) + ' ' + field2);
+      }
+    });
+    $("input[name='inputLastName']").on("input", function(){
+      var field1 = $("input[name='inputFirstName']").val();
+      var field2 = $("input[name='inputLastName']").val();
+      if (!alphabetRegex.test(field2)) {
+        alert("Name should have alphabets only");
+        $("input[name='inputLastName']").val(field2.slice(0, -1));
+        $("input[name='inputFullName']").val(field1 + ' ' + field2.slice(0, -1));
+      }
+    });
+
     // Check if file provided is image or not.
     $("input[type='file']").change(function () {
       var file = this.files[0];
@@ -167,8 +189,7 @@
       }
     });
 
-    // Form validation with regex.
-    var alphabetRegex = /^[a-zA-Z]+$/;
+    // Full form validation
     $(".assign6Form").submit(function (event) {
       var inputFirstName = $("input[name='inputFirstName']").val();
       var inputLastName = $("input[name='inputLastName']").val();

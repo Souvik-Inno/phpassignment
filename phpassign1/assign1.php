@@ -1,4 +1,5 @@
 <?php
+
   // If not logged in go to home page. 
   session_start();
   if (!isset($_SESSION['logged'])) {
@@ -129,6 +130,27 @@
     });
 
     // Form validation with regex.
+    var alphabetRegex = /^[a-zA-Z']+$/;
+    $("input[name='inputFirstName']").on("input", function(){
+      var field1 = $("input[name='inputFirstName']").val();
+      var field2 = $("input[name='inputLastName']").val();
+      if (!alphabetRegex.test(field1)) {
+        alert("Name should have alphabets only");
+        $("input[name='inputFirstName']").val(field1.slice(0, -1));
+        $("input[name='inputFullName']").val(field1.slice(0, -1) + ' ' + field2);
+      }
+    });
+    $("input[name='inputLastName']").on("input", function(){
+      var field1 = $("input[name='inputFirstName']").val();
+      var field2 = $("input[name='inputLastName']").val();
+      if (!alphabetRegex.test(field2)) {
+        alert("Name should have alphabets only");
+        $("input[name='inputLastName']").val(field2.slice(0, -1));
+        $("input[name='inputFullName']").val(field1 + ' ' + field2.slice(0, -1));
+      }
+    });
+
+    // Full Form validation.
     var alphabetRegex = /^[a-zA-Z]+$/;
     $(".assign1Form").submit(function (event) {
       var inputFirstName = $("input[name='inputFirstName']").val();

@@ -1,4 +1,6 @@
 <?php
+
+  // Get form data and generate pdf with the data.
   if (isset($_POST['btnDownload'])) {
     require("classFormData.php");
     require('fpdf/fpdf.php');

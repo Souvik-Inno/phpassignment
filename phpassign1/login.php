@@ -1,4 +1,5 @@
 <?php
+
   /* Setting the login as true in session 
   *  and relocating to homepage.
   */

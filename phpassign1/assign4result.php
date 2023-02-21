@@ -1,4 +1,5 @@
 <?php
+
   // Gets data from Form4 and stores in object.
   require 'classFormData.php';
   session_start();

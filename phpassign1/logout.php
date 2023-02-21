@@ -1,7 +1,9 @@
 <?php
-  /* Unset the login credentials and Logout.
-  *  Redirect to loginPage.
-  */
+
+  /**
+   *  Unset the login credentials and Logout.
+   *  Redirect to loginPage.
+   */
   session_start();
   unset($_SESSION['logged']);
   unset($_SESSION['email']);

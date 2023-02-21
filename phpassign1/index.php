@@ -1,4 +1,5 @@
 <?php
+
   /* Check if logged in, if not then redirect to loginPage.
   *  If q is set then go to the desired page using the query.
   */
@@ -9,7 +10,7 @@
   if (isset($_GET['q'])) {
     $page = $_GET['q'];
   } else {
-    $page = 4; 
+    $page = 4;
   }
   $page_filename = "assign{$page}.php";
   if (file_exists($page_filename)) {
