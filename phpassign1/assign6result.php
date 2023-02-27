@@ -2,6 +2,7 @@
 
   // Gets data from Form5 and stores in object.
   require 'classFormData.php';
+  // require("./vendor/autoload.php");
   session_start();
   $formData = new FormData();
   $formData = $_SESSION['formData'];

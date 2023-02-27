@@ -3,7 +3,7 @@
   // Get form data and generate pdf with the data.
   if (isset($_POST['btnDownload'])) {
     require("classFormData.php");
-    require('fpdf/fpdf.php');
+    require("../phpassign1/vendor/autoload.php");
     $formData = new FormData();
     session_start();
     $formData = $_SESSION['formData'];

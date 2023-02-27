@@ -9,31 +9,42 @@
      *  Declaring variables.
      *  @var string $inputFirstName 
      *    For storing first name from form.
+     */
+    public $inputFirstName;
+    /**
      *  @var string $inputLastName 
      *    For storing last name from form.
+     */
+    public $inputLastName;
+    /**
      *  @var array $image 
      *    For storing image array containing name, tmp_name etc.
-     *  @var string $destiation 
+     */
+    public $image;
+    /**
+     *  @var string $destination 
      *    For storing destination of image.
-     *  @var string[] $tableDataArray
-     *    For storing string array of subject and marks.
+     */
+    public $destination;
+    /**
+     *  @var string $tableDataArray
+     *    For storing string conatining all subject and marks.
+     */
+    public $tableDataArray;
+    /**
      *  @var int $phoneNumber 
      *    For storing phone Number from form.
-     *  @var string $apiKey 
-     *    For storing apiKey for mail verification.
+     */
+    public $phoneNumber;
+    /**
      *  @var string $emailId 
      *    For storing email id from form.
+     */
+    public $emailId;
+    /**
      *  @var array $errors 
      *    For storing errors generated.
      */
-    public $inputFirstName;
-    public $inputLastName;
-    public $image;
-    public $destination;
-    public $tableDataArray;
-    public $phoneNumber;
-    // public $apiKey = "wPIk6UQ8PzRDPadxH7xfWqwEes9ZHLRm";
-    public $emailId;
     public $errors = array(
       'inputFirstName' => '',
       'inputLastName' => '',
@@ -45,6 +56,7 @@
 
     /**
      *  Function to set first name.
+     * 
      *  @param string $firstName 
      *    Stores first name.
      */
@@ -54,6 +66,7 @@
 
     /**
      *  Function to set Last name.
+     * 
      *  @param string $lastName 
      *    Stores last name.
      */
@@ -63,6 +76,7 @@
 
     /**
      *  Function to set image.
+     * 
      *  @param string $img 
      *    Stores image details.
      */
@@ -72,6 +86,7 @@
 
     /**
      *  Function to set number.
+     * 
      *  @param int $number 
      *    Stores phone number.
      */
@@ -81,6 +96,7 @@
 
     /**
      *  Function to set email id.
+     * 
      *  @param string $email 
      *    Stores email id.
      */
@@ -90,6 +106,7 @@
 
     /**
      *  Function to set Subject and Marks for table.
+     * 
      *  @param string $tableDataArray 
      *    Stores table data as string.
      */
@@ -109,7 +126,10 @@
 
     /**
      *  Checks error in first and last name.
+     * 
      *  @return bool
+     *    Returns TRUE if no errors are found.
+     *    Else returns FALSE.
      */
     public function errorCheck() {
       $errorCount = 0;
@@ -129,7 +149,10 @@
 
     /**
      *  Checks error in firstname, lastname and image.
+     * 
      *  @return bool
+     *    Returns TRUE if no errors are found.
+     *    Else returns FALSE.
      */
     public function errorCheck2() {
       $errorCount = 0;
@@ -153,7 +176,10 @@
 
     /**
      *  Checks error in firstname, lastname, image and marks.
+     * 
      *  @return bool
+     *    Returns TRUE if no errors are found.
+     *    Else returns FALSE.
      */
     public function errorCheck3() {
       $errorCount = 0;
@@ -182,7 +208,10 @@
     /**
      *  Checks errors in firstname, lastname,
      *  Image, marks and phonenumber.
+     * 
      *  @return bool
+     *    Returns TRUE if no errors are found.
+     *    Else returns FALSE.
      */
     public function errorCheck4() {
       $errorCount = 0;
@@ -213,7 +242,10 @@
 
     /**
      *  Checks errors in firstname, lastname, image, phonenumber and email.
+     * 
      *  @return bool
+     *    Returns TRUE if no errors are found.
+     *    Else returns FALSE.
      */
     public function fullErrorCheck() {
       $errorCount = 0;
@@ -273,9 +305,13 @@
     /**
      *  Function to check if provided email is correct.
      *  Uses mailboxlayer api to verify the mail.
+     * 
      *  @var string $apiKey
      *    Required to connect to the api.
+     * 
      *  @return bool
+     *    Returns TRUE if form is validated.
+     *    Else returns FALSE.
      */
     public function checkEmail() {
       require("apikey.php");
@@ -304,7 +340,8 @@
       curl_close($curl);
       if ($validator->format_valid && $validator->smtp_check) {
         return TRUE;
-      } else {
+      }
+      else {
         return FALSE;
       }
     }
